@@ -1,0 +1,57 @@
+#include<stdio.h>
+
+//Swap utility function
+void swap(int *x, int *y)
+{
+	int temp = *x;
+	*x = *y;
+	*y = temp;
+}
+
+//function to calculate partition index
+int partition(int a[], int start, int end)
+{
+	//choosing last element as the pivot element
+	int pivot = end;
+	int pIndex = start;
+
+	for(int i=start; i<=end-1; i++)
+	{
+		if(a[i] < a[pivot])
+		{
+			swap(&a[i], &a[pIndex]);
+			pIndex++;
+		}
+	}
+	swap(&a[pIndex], &a[pivot]);
+	return pIndex;
+}
+
+void QuickSort(int a[], int start, int end){
+
+	int pIndex;
+
+	if(start>=end)
+	return;
+
+	pIndex = partition(a,start, end);
+	//calling Quicksort function for the first half of the array - from start to Partition Index - 1
+	QuickSort(a,start,pIndex-1);
+	//calling Quicksort function for the latter half of the array - from Partition Index + 1 to end
+	QuickSort(a,pIndex+1,end);
+
+}
+
+int main()
+{
+	int a[] = {-1,-2,1,5,76,-87,43};
+	int n = sizeof(a)/sizeof(a[0]);
+
+	QuickSort(a,0,n-1);
+
+	printf("Sorted Array: ");
+	for(int i=0;i<n;i++)
+	printf("%d ", a[i]);
+
+	return 0;
+}
